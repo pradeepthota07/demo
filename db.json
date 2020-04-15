@@ -1,0 +1,691 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "v1",
+    "title": "Clara Litigation",
+    "description": "This page describes APIs available for Clara Litigation. Litigation API allows customers to integrate Clara data with their internal systems. For all calls, use the api key `secret-key` to authorize calls.",
+    "contact": {
+      "email": "support@claraanalytics.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Attorney Search",
+      "description": "Provides basic details for a list of attorneys",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.claraanalytics.com/products/litigation"
+      }
+    },
+    {
+      "name": "Attorneys in a panel",
+      "description": "Returns a list of attorneys in a given Panel",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.claraanalytics.com/products/litigation"
+      }
+    },
+    {
+      "name": "Attorney Detail",
+      "description": "Returns Attorney detail given an ID",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.claraanalytics.com/products/litigation"
+      }
+    },
+    {
+      "name": "Attorney Claim",
+      "description": "Returns applicant and defense attorneys on a given claim ID",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.claraanalytics.com/products/litigation"
+      }
+    },
+    {
+      "name": "Attorney Recommendation",
+      "description": "Returns recommended list of attorneys given a claim",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.claraanalytics.com/products/litigation"
+      }
+    }
+  ],
+  "paths": {
+    "/litigation/attorney_search": {
+      "post": {
+        "tags": [
+          "Attorney Search"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttorneySearch"
+              }
+            }
+          },
+          "description": "Request payload for attorney search",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttorneyList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Request Body or parameters are not valid"
+          },
+          "401": {
+            "description": "Authorization error with your API key or account"
+          },
+          "403": {
+            "description": "Forbidden error with your API key or account"
+          },
+          "404": {
+            "description": "The requested provider does not exist"
+          },
+          "429": {
+            "description": "Rate limit exceeded. Try your request again"
+          },
+          "500": {
+            "description": "Internal Server error occured"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/litigation/panel": {
+      "get": {
+        "tags": [
+          "Attorneys in a panel"
+        ],
+        "parameters": [
+          {
+            "name": "panel_name",
+            "in": "query",
+            "description": "Panel Name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttorneyPanel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Request Body or parameters are not valid"
+          },
+          "401": {
+            "description": "Authorization error with your API key or account"
+          },
+          "403": {
+            "description": "Forbidden error with your API key or account"
+          },
+          "404": {
+            "description": "The requested provider does not exist"
+          },
+          "429": {
+            "description": "Rate limit exceeded. Try your request again"
+          },
+          "500": {
+            "description": "Internal Server error occured"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/litigation/attorney": {
+      "get": {
+        "tags": [
+          "Attorney Detail"
+        ],
+        "parameters": [
+          {
+            "name": "attorney_id",
+            "in": "query",
+            "description": "Attorney Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "score_type",
+            "in": "query",
+            "description": "Score Type",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttorneyDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Request Body or parameters are not valid"
+          },
+          "401": {
+            "description": "Authorization error with your API key or account"
+          },
+          "403": {
+            "description": "Forbidden error with your API key or account"
+          },
+          "404": {
+            "description": "The requested provider does not exist"
+          },
+          "429": {
+            "description": "Rate limit exceeded. Try your request again"
+          },
+          "500": {
+            "description": "Internal Server error occured"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/litigation/attorney_claim": {
+      "get": {
+        "tags": [
+          "Attorney Claim"
+        ],
+        "parameters": [
+          {
+            "name": "claim_id",
+            "in": "query",
+            "description": "Claim Id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "claim_number",
+            "in": "query",
+            "description": "Claim Number",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttorneyClaim"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Request Body or parameters are not valid"
+          },
+          "401": {
+            "description": "Authorization error with your API key or account"
+          },
+          "403": {
+            "description": "Forbidden error with your API key or account"
+          },
+          "404": {
+            "description": "The requested provider does not exist"
+          },
+          "429": {
+            "description": "Rate limit exceeded. Try your request again"
+          },
+          "500": {
+            "description": "Internal Server error occured"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/litigation/attorney_ranking_for_claim": {
+      "get": {
+        "tags": [
+          "Attorney Recommendation"
+        ],
+        "parameters": [
+          {
+            "name": "claim_id",
+            "in": "query",
+            "description": "Claim Id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "claim_number",
+            "in": "query",
+            "description": "Claim Number",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attorney_id",
+            "in": "query",
+            "description": "Attorney Id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "firm_id",
+            "in": "query",
+            "description": "Firm Id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "score_type",
+            "in": "query",
+            "description": "Score Type",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttorneyRankingForClaim"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The Request Body or parameters are not valid"
+          },
+          "401": {
+            "description": "Authorization error with your API key or account"
+          },
+          "403": {
+            "description": "Forbidden error with your API key or account"
+          },
+          "404": {
+            "description": "The requested provider does not exist"
+          },
+          "429": {
+            "description": "Rate limit exceeded. Try your request again"
+          },
+          "500": {
+            "description": "Internal Server error occured"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.claraanalytics.com/v1"
+    },
+    {
+      "url": "https://api-test.claraanalytics.com/v1"
+    },
+    {
+      "url": "https://api-demo.claraanalytics.com/v1"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "AttorneySearch": {
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "example": "Charles"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Brown"
+          },
+          "zip": {
+            "type": "string",
+            "example": "94560"
+          },
+          "city": {
+            "type": "string",
+            "example": "MIDDLETOWN"
+          },
+          "state": {
+            "type": "string",
+            "example": "CA"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "example": "CA"
+          },
+          "firm_name": {
+            "type": "string",
+            "example": "LITTLER MENDELSON P.C."
+          },
+          "min_score": {
+            "type": "string",
+            "example": "E"
+          },
+          "subscore": {
+            "type": "string",
+            "example": "cost_tier"
+          },
+          "score_type": {
+            "type": "string",
+            "example": "internal"
+          },
+          "sort": {
+            "type": "string",
+            "example": "asc"
+          },
+          "sort_by": {
+            "type": "string",
+            "example": "score"
+          },
+          "index": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "AttorneyList": {
+        "type": "object",
+        "properties": {
+          "page_size": {
+            "type": "integer",
+            "example": "10"
+          },
+          "page_number": {
+            "type": "integer",
+            "example": "1"
+          },
+          "total_pages": {
+            "type": "integer",
+            "example": "4"
+          },
+          "status_code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "total_results": {
+            "type": "integer",
+            "example": "32"
+          },
+          "attorney_list": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "attorney_type": {
+                  "type": "string",
+                  "example": "DEFENSE"
+                },
+                "attorney_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA_12"
+                },
+                "firm_name": {
+                  "type": "string",
+                  "example": "LITTLER MENDELSON P.C."
+                },
+                "attorney_name": {
+                  "type": "string",
+                  "example": "James Wilson King"
+                },
+                "firm_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA"
+                },
+                "cost_tier": {
+                  "type": "string",
+                  "example": "A"
+                },
+                "pd_tier": {
+                  "type": "string",
+                  "example": "B"
+                },
+                "td_tier": {
+                  "type": "string",
+                  "example": "C"
+                },
+                "settlement_tier": {
+                  "type": "string",
+                  "example": "D"
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": "CA"
+                },
+                "expense_tier": {
+                  "type": "string",
+                  "example": "E"
+                },
+                "panels": {
+                  "type": "string",
+                  "example": "Panel1,Panel2,Panel3"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AttorneyPanel": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "total_results": {
+            "type": "integer",
+            "example": "32"
+          },
+          "panel_name": {
+            "type": "string",
+            "example": "panel1"
+          },
+          "attorney_list": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "attorney_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA_12"
+                },
+                "firm_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AttorneyDetail": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "total_results": {
+            "type": "integer",
+            "example": "32"
+          },
+          "attorney_list": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "attorney_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA_12"
+                },
+                "firm_id": {
+                  "type": "string",
+                  "example": "3abe2a58717sfdf7d8fd99a93a51c_PA"
+                },
+                "attorney_name": {
+                  "type": "string",
+                  "example": "James Wilson King"
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "example": "CA"
+                },
+                "panels": {
+                  "type": "string",
+                  "example": "Panel1,Panel2,Panel3"
+                },
+                "attorney_type": {
+                  "type": "string",
+                  "example": "DEFENSE"
+                },
+                "cost_tier": {
+                  "type": "string",
+                  "example": "A"
+                },
+                "pd_tier": {
+                  "type": "string",
+                  "example": "B"
+                },
+                "td_tier": {
+                  "type": "string",
+                  "example": "C"
+                },
+                "settlement_tier": {
+                  "type": "string",
+                  "example": "D"
+                },
+                "expense_tier": {
+                  "type": "string",
+                  "example": "E"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AttorneyClaim": {
+        "type": "object",
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "example": "1276-ej-wc-234344"
+          },
+          "defense_attorney_id": {
+            "type": "string",
+            "example": "3abe2a58717sfdf7d8fd99a93a51c_PA_12"
+          },
+          "applicant_attorney_id": {
+            "type": "string",
+            "example": "38fne58717sfdf7d8fd99a93a51c_PA_12"
+          }
+        }
+      },
+      "AttorneyRankingForClaim": {
+        "type": "object",
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "example": "1276-ej-wc-234344"
+          },
+          "claim_number": {
+            "type": "string",
+            "example": "1276-ej-wc-234344"
+          },
+          "attorney_id": {
+            "type": "string",
+            "example": "3abe2a58717sfdf7d8fd99a93a51c_PA_12"
+          },
+          "attorney_name": {
+            "type": "string",
+            "example": "James Wilson King"
+          },
+          "firm_id": {
+            "type": "string",
+            "example": "3abe2a58717sfdf7d8fd99a93a51c_PA"
+          },
+          "firm_name": {
+            "type": "string",
+            "example": "LITTLER MENDELSON P.C."
+          },
+          "panels": {
+            "type": "string",
+            "example": "Panel1,Panel2,Panel3"
+          },
+          "outcome": {
+            "type": "string",
+            "example": "D"
+          },
+          "benefit_percentage": {
+            "type": "integer",
+            "example": 20
+          },
+          "benefit_dollars": {
+            "type": "integer",
+            "example": 100
+          }
+        }
+      }
+    }
+  }
+}
